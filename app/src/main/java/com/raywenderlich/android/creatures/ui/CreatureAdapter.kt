@@ -8,11 +8,15 @@ import com.raywenderlich.android.creatures.app.inflate
 import com.raywenderlich.android.creatures.model.Creature
 import kotlinx.android.synthetic.main.list_item_creature.view.*
 
-class CreatureAdapter(private val creatures: List<Creature>) :
+class CreatureAdapter(private val creatures: MutableList<Creature>) :
     RecyclerView.Adapter<CreatureAdapter.ViewHolder>() {
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : View.OnClickListener, RecyclerView.ViewHolder(itemView) {
         private lateinit var creature: Creature
+
+        init {
+            itemView.setOnClickListener(this)
+        }
 
         fun bind(creature: Creature) {
             this.creature = creature
@@ -27,6 +31,14 @@ class CreatureAdapter(private val creatures: List<Creature>) :
             itemView.fullName.text = creature.fullName
             itemView.nickname.text = creature.nickname
         }
+
+        override fun onClick(view: View?) {
+            view?.let {
+                val context = it.context
+                val intent = CreatureActivity.newIntent(context = context, creatureId = creature.id)
+                context.startActivity(intent)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -38,4 +50,10 @@ class CreatureAdapter(private val creatures: List<Creature>) :
     }
 
     override fun getItemCount() = creatures.size
+
+    fun updateCreatures(creatures: List<Creature>) {
+        this.creatures.clear()
+        this.creatures.addAll(creatures)
+        notifyDataSetChanged()
+    }
 }
