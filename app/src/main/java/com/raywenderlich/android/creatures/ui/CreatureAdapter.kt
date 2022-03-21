@@ -25,6 +25,7 @@ class CreatureAdapter(private val creatures: List<Creature>) :
                 )
             )
             itemView.fullName.text = creature.fullName
+            itemView.nickname.text = creature.nickname
         }
     }
 
