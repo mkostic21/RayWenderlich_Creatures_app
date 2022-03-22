@@ -7,12 +7,13 @@
 
     <ImageView
         android:id="@+id/foodImage"
-        android:layout_width="@dimen/list_item_food_height"
+        android:layout_width="@dimen/list_item_creature_height"
         android:layout_height="@dimen/list_item_food_height"
         android:contentDescription="@string/content_description_food_image"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         tools:srcCompat="@drawable/food_banana"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
