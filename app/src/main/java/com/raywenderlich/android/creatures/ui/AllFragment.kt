@@ -44,21 +44,31 @@ import kotlinx.android.synthetic.main.fragment_all.*
 
 class AllFragment : Fragment() {
 
-  private val adapter = CreatureCardAdapter(CreatureStore.getCreatures().toMutableList())
+    private val adapter = CreatureCardAdapter(CreatureStore.getCreatures().toMutableList())
 
-  companion object {
-    fun newInstance(): AllFragment {
-      return AllFragment()
+    companion object {
+        fun newInstance(): AllFragment {
+            return AllFragment()
+        }
     }
-  }
 
-  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-    return inflater.inflate(R.layout.fragment_all, container, false)
-  }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        return inflater.inflate(R.layout.fragment_all, container, false)
+    }
 
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-    creatureRecyclerView.layoutManager = GridLayoutManager(activity, 2, GridLayoutManager.VERTICAL, false)
-    creatureRecyclerView.adapter = adapter
-  }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val layoutManager = GridLayoutManager(activity, 3, GridLayoutManager.VERTICAL, false)
+        layoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int): Int {
+                return if ((position + 1) % 7 == 0) 3 else 1
+            }
+        }
+        creatureRecyclerView.layoutManager = layoutManager
+        creatureRecyclerView.adapter = adapter
+    }
 }
